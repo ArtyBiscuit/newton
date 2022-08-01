@@ -1,4 +1,6 @@
-SRC		=	main.c  controls/controls.c  planets/planets.c  render/render.c  ship/ship.c  ship/littledot.c
+SRC		=	main.c \
+			planet/init.c planet/utils.c planet/update.c \
+			vars/init.c vars/hook.c vars/draw.c vars/utils.c
 OBJ 	=	$(SRC:%.c=%.o)
 CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror
