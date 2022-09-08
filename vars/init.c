@@ -35,7 +35,7 @@ int *init_keys(void)
 void init_mlx_hook(t_vars *vars)
 {
 	mlx_loop_hook(vars->mlx, render_next_frame, vars);
-    mlx_hook(vars->win, 17, 0, destroy_vars, vars);
+    mlx_hook(vars->win, 17, 0L, destroy_vars, vars);
 	mlx_hook(vars->win, 4, (1L<<2), mouse_down, vars);
 	mlx_hook(vars->win, 5, (1L<<3), mouse_up, vars);
 }

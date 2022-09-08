@@ -9,7 +9,7 @@ void update_planet(t_planet **planet_list, t_planet *planet, float time)
 	planet->acc_y = 0.0;
 	while (planet_list[i])
 	{
-		if (planet_cmp(planet, planet_list[i]))
+		if (planet_list[i]->is_moving && planet_cmp(planet, planet_list[i]))
 		{
 			dist_X = planet_list[i]->pos_x - planet->pos_x;
 			dist_Y = planet_list[i]->pos_y - planet->pos_y;
@@ -39,64 +39,15 @@ void update_planet(t_planet **planet_list, t_planet *planet, float time)
 	planet->pos_y += planet->vel_y * time;
 }
 
-void check_planet_collision(t_planet ***planet_list, t_planet *planet)
-{
-	int i;
-	float dist, dist_X, dist_Y;
-	i = 0;
-	while ((*planet_list)[i])
-	{
-		if (planet_cmp(planet, (*planet_list)[i]))
-		{
-			dist_X = (*planet_list)[i]->pos_x - planet->pos_x;
-			dist_Y = (*planet_list)[i]->pos_y - planet->pos_y;
-			dist = sqrt(dist_X * dist_X + dist_Y * dist_Y);
-			if (dist <= planet->radius)
-			{
-				if (planet->radius > (*planet_list)[i]->radius)
-				{
-                    remove_planet(planet_list, (*planet_list)[i]->id);
-					i--;
-				}
-			}
-			else if (dist <= planet->radius + (*planet_list)[i]->radius)
-			{
-                if (planet->radius > (*planet_list)[i]->radius)
-                {
-					add_planet(planet_list,
-					init_planet(get_max_planet_id(*planet_list),
-					(*planet_list)[i]->pos_x, (*planet_list)[i]->pos_y,
-					(*planet_list)[i]->mass * 0.5, (*planet_list)[i]->vel_x * 0.5, (*planet_list)[i]->vel_y * 0.5));
-					set_planet_values((*planet_list)[i],
-					(*planet_list)[i]->pos_x, (*planet_list)[i]->pos_y,
-					(*planet_list)[i]->mass * 0.5,
-					(*planet_list)[i]->vel_x * 0.5, (*planet_list)[i]->vel_y * 0.5);
-                }
-			}
-		}
-		i++;
-	}
-}
-
 void update_planet_list(t_planet ***planet_list, float time)
 {
-    (void) time;
     t_planet **new_planet_list = copy_planet_list(*planet_list);
 	int i = 0;
 	while ((*planet_list)[i])
 	{
-		update_planet(new_planet_list, (*planet_list)[i], time);
+		if ((*planet_list)[i]->is_moving)
+			update_planet(new_planet_list, (*planet_list)[i], time);
         i++;
 	}
     destroy_planet_list(new_planet_list);
-    new_planet_list = copy_planet_list(*planet_list);
-    i = 0;
-	while ((*planet_list)[i])
-	{
-		if (planet_exist(new_planet_list, (*planet_list)[i]->id))
-			check_planet_collision(&new_planet_list, (*planet_list)[i]);
-        i++;
-	}
-    destroy_planet_list(*planet_list);
-	*planet_list = new_planet_list;
 }

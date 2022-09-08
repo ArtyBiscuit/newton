@@ -20,6 +20,7 @@ typedef struct s_planet
 	double vel_x, vel_y;
 	double acc_x, acc_y;
 	int color;
+	int is_moving;
 } t_planet;
 
 typedef struct s_vars
@@ -88,5 +89,6 @@ void draw_planet_list(t_vars *vars, t_planet **planet_list);
 void update_image(t_vars *vars);
 // vars/utils.c
 void reset_image(char *buf, int len);
+void check_planet_buf(t_vars *vars);
 
 #endif

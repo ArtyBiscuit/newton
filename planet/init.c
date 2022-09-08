@@ -13,6 +13,7 @@ t_planet *init_planet(int id, int pos_x, int pos_y, double mass, double vel_x, d
     planet->acc_y = 0.0;
     planet->color = calcul_planet_color(planet->mass);
 	planet->radius = calcul_planet_radius(planet->mass);
+    planet->is_moving = 1;
     return (planet);
 }
 

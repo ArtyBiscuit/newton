@@ -49,6 +49,7 @@ t_planet *copy_planet(t_planet *planet)
 	new_planet->vel_y = planet->vel_y;
 	new_planet->acc_x = planet->acc_x;
 	new_planet->acc_y = planet->acc_y;
+	new_planet->is_moving = planet->is_moving;
 	return (new_planet);
 }
 
@@ -115,6 +116,7 @@ void print_planets(t_planet **planets)
 		printf("\tAcceleration:\n");
 		printf("\t\tX: %f\n", planets[i]->acc_x);
 		printf("\t\tY: %f\n", planets[i]->acc_y);
+		printf("\tIs Moving: %d\n", planets[i]->is_moving);
 		i++;
 	}
 	printf("\n");
